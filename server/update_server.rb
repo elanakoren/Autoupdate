@@ -6,7 +6,7 @@ CLIENT_DIR = "../client"
 get '/hash' do
   @manifest ||= Manifest.new(CLIENT_DIR)
   content_type :json
-  @manifest.hash
+  {hash: @manifest.hash}.to_json
 end
 
 get '/manifest' do

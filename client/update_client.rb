@@ -1,0 +1,1 @@
+#The client contacts the server to find out if anything has changed

@@ -4,8 +4,16 @@ require 'json'
 
 class Manifest
   
+  def initialize(directory)
+    @manifest = {}
+    Dir.chdir(directory) do
+      Dir["**/*.*"].each do |entry|
+        @manifest[entry] = Digest::MD5.hexdigest(File.read(entry))
+      end
+    end
+  end
+  
   def manifest
-    generate_manifest unless @manifest
     return @manifest
   end
   
@@ -15,15 +23,6 @@ class Manifest
   
   def hash
     Digest::MD5.hexdigest(json)
-  end
-  
-  private
-  
-  def generate_manifest
-    @manifest = {}
-    Dir["**/*.*"].each do |entry|
-      @manifest[entry] = Digest::MD5.hexdigest(File.read(entry))
-    end
   end
   
 end
